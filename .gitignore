@@ -5,4 +5,6 @@ data/
 .vscode/
 *.iml
 .DS_Store
-
+frontend-app/node_modules/
+frontend-app/dist/
+frontend-app/.env
