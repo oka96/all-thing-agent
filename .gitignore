@@ -1,0 +1,8 @@
+target/
+data/
+.codex-runtime/
+.idea/
+.vscode/
+*.iml
+.DS_Store
+

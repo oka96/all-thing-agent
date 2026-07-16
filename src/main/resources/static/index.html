@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#e95b37">
+    <title>P2P Clearing Desk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="page-shell">
+    <header class="masthead reveal">
+        <a class="brand" href="#" aria-label="P2P Clearing Desk home">
+            <span class="brand-mark" aria-hidden="true">P2P</span>
+            <span>
+                <strong>Clearing Desk</strong>
+                <small>Local transfer operations</small>
+            </span>
+        </a>
+        <div class="masthead-status">
+            <span class="environment-badge">Simulation</span>
+            <span class="system-light" id="system-status"><i></i> Connecting</span>
+        </div>
+    </header>
+
+    <section class="account-section reveal delay-1" aria-labelledby="accounts-title">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">Mock customers</p>
+                <h1 id="accounts-title">Choose the sender</h1>
+            </div>
+            <p class="section-note">Different account states produce different transfer outcomes.</p>
+        </div>
+        <div class="account-strip" id="account-strip" aria-live="polite">
+            <div class="account-skeleton"></div>
+            <div class="account-skeleton"></div>
+            <div class="account-skeleton"></div>
+        </div>
+    </section>
+
+    <main class="workbench">
+        <section class="transfer-column reveal delay-2" aria-labelledby="transfer-title">
+            <div class="panel transfer-panel">
+                <div class="panel-title-row">
+                    <div>
+                        <p class="eyebrow">Posting window 01</p>
+                        <h2 id="transfer-title">New transfer</h2>
+                    </div>
+                    <span class="currency-stamp">MYR</span>
+                </div>
+
+                <form id="transfer-form" novalidate>
+                    <div class="form-grid">
+                        <label class="field">
+                            <span>From customer</span>
+                            <select id="sender" name="sender" required disabled></select>
+                        </label>
+                        <label class="field">
+                            <span>To customer</span>
+                            <select id="receiver" name="receiver" required disabled>
+                                <option value="">Select recipient</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <label class="field amount-field">
+                        <span>Amount</span>
+                        <div class="money-input">
+                            <b>RM</b>
+                            <input id="amount" name="amount" inputmode="decimal" autocomplete="off" placeholder="0.00" required disabled>
+                        </div>
+                    </label>
+                    <div class="quick-amounts" aria-label="Quick amounts">
+                        <button type="button" data-amount="25">+ 25</button>
+                        <button type="button" data-amount="50">+ 50</button>
+                        <button type="button" data-amount="100">+ 100</button>
+                        <button type="button" data-amount="800">Risk review 800</button>
+                    </div>
+
+                    <label class="field">
+                        <span>Transfer note <em>optional</em></span>
+                        <input id="note" name="note" maxlength="140" placeholder="Dinner, rent, shared ride..." disabled>
+                    </label>
+
+                    <div class="transfer-preview" id="transfer-preview">
+                        <span>Projected sender balance</span>
+                        <strong>RM 0.00</strong>
+                    </div>
+                    <p class="form-error" id="form-error" role="alert"></p>
+                    <button class="primary-button" id="transfer-submit" type="submit" disabled>
+                        <span>Post mock transfer</span>
+                        <i aria-hidden="true">→</i>
+                    </button>
+                </form>
+            </div>
+
+            <section class="receipt panel" id="receipt" aria-live="polite" aria-labelledby="receipt-title">
+                <div class="empty-receipt">
+                    <span class="receipt-glyph" aria-hidden="true">◎</span>
+                    <div>
+                        <p class="eyebrow">Result docket</p>
+                        <h3 id="receipt-title">No transfer posted yet</h3>
+                        <p>The simulator records attempts, events, risk evidence, and ledger movement.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="history panel" aria-labelledby="history-title">
+                <div class="panel-title-row">
+                    <div>
+                        <p class="eyebrow">Evidence log</p>
+                        <h2 id="history-title">Recent transfers</h2>
+                    </div>
+                    <button class="text-button" id="refresh-history" type="button">Refresh</button>
+                </div>
+                <div class="history-list" id="history-list" aria-live="polite">
+                    <div class="history-skeleton"></div>
+                    <div class="history-skeleton"></div>
+                </div>
+            </section>
+        </section>
+
+        <aside class="assistant-column reveal delay-3" aria-labelledby="assistant-title">
+            <section class="assistant-panel">
+                <header class="assistant-header">
+                    <div>
+                        <p class="eyebrow light">Spring AI / Codex CLI</p>
+                        <h2 id="assistant-title">Transfer troubleshooter</h2>
+                    </div>
+                    <span class="read-only-badge" title="The assistant can only query curated diagnostic views">Read-only</span>
+                </header>
+
+                <div class="diagnostic-rail" id="diagnostic-rail">
+                    <div><span>Skill</span><strong id="diag-skills">Not routed</strong></div>
+                    <div><span>Views</span><strong id="diag-tables">None</strong></div>
+                    <div><span>Access</span><strong class="safe">SELECT only</strong></div>
+                    <div><span>Request</span><strong id="diag-request">—</strong></div>
+                </div>
+
+                <div class="suggested-prompts" aria-label="Suggested questions">
+                    <button type="button" data-prompt="Why did P2P-000102 fail?">Insufficient funds</button>
+                    <button type="button" data-prompt="Was P2P-000105 debited without a credit?">Missing credit</button>
+                    <button type="button" data-prompt="Why is P2P-000104 under review?">Risk review</button>
+                </div>
+
+                <div class="chat-transcript" id="chat-transcript" aria-live="polite">
+                    <article class="message assistant-message">
+                        <span class="message-label">Troubleshooter</span>
+                        <p>Give me a transfer reference such as <strong>P2P-000105</strong>, or select a customer and ask about their latest activity. After each answer, expand the decision trace or database evidence to inspect the selected skills, fixed SQL, parameters, and redacted rows.</p>
+                    </article>
+                </div>
+
+                <form class="chat-composer" id="chat-form">
+                    <label for="chat-input" class="sr-only">Troubleshooting question</label>
+                    <textarea id="chat-input" rows="3" maxlength="4000" placeholder="Ask why a transfer failed, is pending, or has missing funds..."></textarea>
+                    <div class="composer-footer">
+                        <span id="chat-context">No customer context</span>
+                        <button id="chat-submit" type="submit">Diagnose <i aria-hidden="true">↗</i></button>
+                    </div>
+                </form>
+            </section>
+        </aside>
+    </main>
+
+    <footer class="page-footer">
+        <span>Local simulation · H2 evidence store</span>
+        <span>Assistant has no mutation tools</span>
+    </footer>
+</div>
+<script src="/app.js" defer></script>
+</body>
+</html>
